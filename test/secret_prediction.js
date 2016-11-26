@@ -4,7 +4,19 @@ function getNonce(){
 
 contract('SecretPrediction', function(accounts) {
   describe('submit', function(){
+    it("does not allow incorrect deposit to be sent", function(done){
+      var incorrectDeposit = web3.toWei(2);
+      var prediction;
+      SecretPrediction.new('q').then(function(_prediction){
+        prediction = _prediction;
+        return prediction.submit('encrypted choice', {value:incorrectDeposit})
+      }).catch(function(error){
+        assert.equal(web3.eth.getBalance(prediction.address).toNumber(), 0);
+      }).then(done);
+    })
+
     it("reveals my choice only after opened", function(done) {
+      var deposit = web3.toWei(1);
       var question = 'Does Trump win US election?';
       var prediction;
       var nonce = getNonce();
@@ -12,7 +24,7 @@ contract('SecretPrediction', function(accounts) {
       var encrypted_choice = web3.sha3(nonce + choice);
       SecretPrediction.new(question).then(function(_prediction){
         prediction = _prediction;
-        prediction.submit(encrypted_choice)
+        prediction.submit(encrypted_choice, {value:deposit})
       })
       .then(function(){
         prediction.open(nonce, choice)
@@ -23,14 +35,15 @@ contract('SecretPrediction', function(accounts) {
       }).then(done);
     });
 
-    it.only("does not reveal my choice if same nonce is not passed", function(done) {
+    it("does not reveal my choice if same nonce is not passed", function(done) {
+      var deposit = web3.toWei(1);
       var question = 'Does Trump win US election?';
       var prediction;
       var choice = 'yes';
       var encrypted_choice = web3.sha3(getNonce() + choice);
       SecretPrediction.new(question).then(function(_prediction){
         prediction = _prediction;
-        prediction.submit(encrypted_choice)
+        prediction.submit(encrypted_choice, {value:deposit})
       }).then(function(){
         return prediction.open(getNonce(), choice)
       }).then(function(){
