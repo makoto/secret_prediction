@@ -35,6 +35,10 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 - [x] No left over Ether in the contract
 - [x] Only contract owner can report
 
+## Open Discussion
+
+- What should be the behavior if no one made correct choice?
+
 ## TODO
 
 - [ ] Submission deadline
