@@ -34,6 +34,7 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 - [x] Correct nonce has to be set to reveal the bet
 - [x] No left over Ether in the contract
 - [x] Only contract owner can report
+- [x] Does not accept empty value
 
 ## Open Discussion
 

@@ -32,12 +32,23 @@ contract SecretPrediction is Util{
 		_;
 	}
 
+	modifier noAnswerReported{
+		if(strCompare(answer, '') != 0) throw;
+		_;
+	}
+
+	modifier answerReported{
+		if(strCompare(answer, '') == 0) throw;
+		_;
+	}
+
 	function submit(bytes32 _encrypted_choice) payable correctDeposit{
+		if(_encrypted_choice == 0) throw;
 		choices[msg.sender] = Choice(_encrypted_choice, '');
 		total_balance+= msg.value;
 	}
 
-	function open(string nonce, string choice){
+	function open(string nonce, string choice) noAnswerReported{
 		var choiceStruct = choices[msg.sender];
 		var _encrypted_choice = sha3(strConcat(nonce, choice));
 		if(choiceStruct.encrypted_choice != _encrypted_choice){
@@ -50,7 +61,7 @@ contract SecretPrediction is Util{
 		return choices[msg.sender].choice;
 	}
 
-	function myReward() returns(uint){
+	function myReward() answerReported returns(uint){
 		if(strCompare(answer, choices[msg.sender].choice) == 0){
 			return getPayout();
 		}else{
@@ -66,8 +77,10 @@ contract SecretPrediction is Util{
 		return total_balance - (getPayout() * answers[answer]);
 	}
 
+	/* assumption: everybody has opened their choice*/
 	function report(string _answer) onlyOwner{
 		answer = _answer;
+		if(strCompare(answer, '') == 0) throw;
 		if(!msg.sender.send(getLeftOver())) throw;
 	}
 

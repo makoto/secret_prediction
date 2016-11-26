@@ -70,7 +70,18 @@ contract('SecretPrediction', function(accounts) {
       }).then(done);
     })
 
-    it("does not reveal my choice if same nonce is not passed", function(done) {
+    it("does not allow zero encrypted choice to be set", function(done){
+      var deposit = web3.toWei(1);
+      var prediction;
+      SecretPrediction.new('q').then(function(_prediction){
+        prediction = _prediction;
+        return prediction.submit(0, {value:deposit})
+      }).catch(function(error){
+        assert.equal(web3.eth.getBalance(prediction.address).toNumber(), 0);
+      }).then(done);
+    })
+
+    it("can not open my choice if same nonce is not passed", function(done) {
       var deposit = web3.toWei(1);
       var question = 'Does Trump win US election?';
       var prediction;
