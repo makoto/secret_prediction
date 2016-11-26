@@ -46,3 +46,4 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 
 - [ ] Submission deadline
 - [ ] Open submission deadline
+- [ ] Add time dependent tests
