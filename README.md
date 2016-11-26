@@ -27,6 +27,7 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 - Is the randomization logic random enough?
 - Are there better way to verify so that you don't need to remember the nonce at client side?
 - Am I using right data types for right values?
+- Does it have any potential of buffer overflow?
 - Are all the necessary attack vectors blocked?
 
 ## Security check
