@@ -1,7 +1,8 @@
 pragma solidity ^0.4.2;
 import './Util.sol';
+import './zeppelin/Ownable.sol';
 
-contract SecretPrediction is Util{
+contract SecretPrediction is Util, Ownable{
 	string public question;
 	string public answer;
 	address public owner;
@@ -19,16 +20,10 @@ contract SecretPrediction is Util{
 	function SecretPrediction(string _question){
 		question = _question;
 		deposit = 1 ether;
-		owner = msg.sender;
 	}
 
 	modifier correctDeposit{
 		if(msg.value != deposit) throw;
-		_;
-	}
-
-	modifier onlyOwner{
-		if(msg.sender != owner) throw;
 		_;
 	}
 

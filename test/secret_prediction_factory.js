@@ -26,5 +26,21 @@ contract('SecretPredictionFactory', function(accounts) {
       });
       factory.create(question)
     })
+
+    it("only owner can create new prediction", function(done){
+      var factory;
+      SecretPredictionFactory.new().then(function(_factory){
+        factory = _factory;
+        return factory.numPredictions.call();
+      }).then(function(numPredictions) {
+        assert.equal(numPredictions.toNumber(), 0);
+      }).then(function(){
+        factory.create('Does Trump win US election?', {from:accounts[1]})
+      }).then(function(){
+        return factory.numPredictions.call()
+      }).then(function(numPredictions){
+        assert.equal(numPredictions.toNumber(), 0);
+      }).then(done);
+    })
   })
 });
