@@ -9,18 +9,51 @@ contract('SecretPrediction', function(accounts) {
       var question = 'Does Trump win US election?';
       var prediction;
       var nonce = getNonce();
-      var choice = 'yes';
-      var encrypted_choice = web3.sha3(nonce + choice);
-      SecretPrediction.new(question).then(function(_prediction){
+      var yes = 'yes';
+      var no = 'no';
+      var encrypted_yes_choice = web3.sha3(nonce + yes);
+      var encrypted_no_choice = web3.sha3(nonce + no);
+      var administrator = accounts[0]
+      SecretPrediction.new(question, {from:administrator}).then(function(_prediction){
         prediction = _prediction;
-        prediction.submit(encrypted_choice, {value:deposit})
-      })
-      .then(function(){
-        prediction.open(nonce, choice)
+        return prediction.submit(encrypted_yes_choice, {value:deposit, from:accounts[1]})
       }).then(function(){
-        return prediction.myChoice.call()
-      }).then(function(c){
-        assert.equal(c, choice);
+        return prediction.submit(encrypted_yes_choice, {value:deposit, from:accounts[2]})
+      }).then(function(){
+        return prediction.submit(encrypted_yes_choice, {value:deposit, from:accounts[3]})
+      }).then(function(){
+        return prediction.submit(encrypted_no_choice, {value:deposit, from:accounts[4]})
+        assert.equal(web3.eth.getBalance(prediction.address).toNumber(), web3.toWei(4));
+      }).then(function(){
+        return prediction.open(nonce, yes, {from:accounts[1]})
+      }).then(function(){
+        return prediction.open(nonce, yes, {from:accounts[2]})
+      }).then(function(){
+        return prediction.open(nonce, yes, {from:accounts[3]})
+      }).then(function(){
+        return prediction.open(nonce, no, {from:accounts[4]})
+      }).then(function(){
+        return prediction.report('yes', {from:administrator})
+      }).then(function(){
+        return prediction.myReward.call({from:accounts[1]})
+      }).then(function(reward){
+        assert.equal(reward.toNumber(), 1333333333333333200);
+        return prediction.withdraw({from:accounts[1]})
+      }).then(function(){
+        return prediction.myReward.call({from:accounts[2]})
+      }).then(function(reward){
+        assert.equal(reward.toNumber(), 1333333333333333200);
+        return prediction.withdraw({from:accounts[2]})
+      }).then(function(){
+        return prediction.myReward.call({from:accounts[3]})
+      }).then(function(reward){
+        assert.equal(reward.toNumber(), 1333333333333333200);
+        return prediction.withdraw({from:accounts[3]})
+      }).then(function(){
+        return prediction.myReward.call({from:accounts[4]})
+      }).then(function(reward){
+        assert.equal(reward, 0);
+        assert.equal(web3.eth.getBalance(prediction.address).toNumber(), 0);
       }).then(done);
     });
   })

@@ -18,16 +18,24 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 
 - Administrator adds a yes/no question
 - Participant submits yes/no bet in encrypted way.
-- Participant reveals their answers
-- Administrator announces the answer to the question.
+- Participant opens their answers
+- Administrator reports the answer to the question.
 - Participants receives payout
 
-## Open Questions
+## Check points.
 
 - Is the randomization logic random enough?
-- Are there better way to verify so that you don't need to remember the nonce at client side? 
+- Are there better way to verify so that you don't need to remember the nonce at client side?
+- Am I using right data types for right values?
+
+## Security check
+
+- [x] Correct deposit has to be set
+- [x] Correct nonce has to be set to reveal the bet
+- [x] No left over Ether in the contract
+- [x] Only contract owner can report
 
 ## TODO
 
-- Submission deadline
-- Open submission deadline
+- [ ] Submission deadline
+- [ ] Open submission deadline
