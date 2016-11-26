@@ -22,19 +22,21 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 - Administrator reports the answer to the question.
 - Participants receives payout
 
-## Check points.
+## Things I would like to get feedback from.
 
 - Is the randomization logic random enough?
 - Are there better way to verify so that you don't need to remember the nonce at client side?
 - Am I using right data types for right values?
+- Are all the necessary attack vectors blocked?
 
 ## Security check
 
-- [x] Correct deposit has to be set
-- [x] Correct nonce has to be set to reveal the bet
+- [x] Correct deposit(`msg.value`) has to be set
+- [x] Correct `nonce` has to be set to reveal the bet
 - [x] No left over Ether in the contract
-- [x] Only contract owner can report
-- [x] Does not accept empty value
+- [x] Only contract owner can `report` the answer
+- [x] Does not accept empty string to `report`
+- [x] Does not accept empty value(0) to `encrypted_choice`
 
 ## Open Discussion
 
