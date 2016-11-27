@@ -1,3 +1,4 @@
+var Tempo = require('@digix/tempo').default
 contract('Util', function(accounts) {
   describe('strConcat', function(){
     it("concatenates", function(done) {
@@ -27,36 +28,27 @@ contract('Util', function(accounts) {
 
   describe('getTime', function(){
     it.only("returns time", function(done) {
-      function jump(time){
-        var params = {
-          jsonrpc: "2.0",
-          method: "evm_increaseTime",
-          params: [time],
-          id: new Date().getTime()
-        }
 
-        return new Promise(function(resolve,reject){
-          web3.currentProvider.sendAsync(params, function(err, result){
-            resolve(result)
-          });
-        });
-      }
-
-      var time = 1 * 60 * 60 * 24 // 1 day
+      var a_day = 1 * 60 * 60 * 24 // 1 day
       var beforeJump;
-
-      Util.new().then(function(_util){
+      var tempo;
+      new Tempo(web3).then(function(_tempo){
+        tempo = _tempo;
+        return Util.new();
+      }).then(function(_util){
         util = _util;
         return util.getTime.call();
       }).then(function(_time){
         beforeJump = _time;
+        console.log('block', web3.eth.getBlock('latest').number);
         console.log('time', _time)
-        return jump(time)
+        return tempo.waitForBlocks(1, a_day);
       }).then(function(){
         return util.getTime.call();
       }).then(function(_time){
+        console.log('block', web3.eth.getBlock('latest').number);
         console.log('time', _time)
-        assert.equal(_time - beforeJump, time)
+        assert.equal(_time - beforeJump, a_day)
       }).then(done);
     })
   })

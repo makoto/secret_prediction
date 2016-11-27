@@ -1,0 +1,25 @@
+{
+  "name": "secret_prediction",
+  "version": "1.0.0",
+  "description": "This is a sample prediction market with a twist. No one knows other people's answer while submitting their bet so that their prediction is solely based on their own decision without influence of the others.",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makoto/secret_prediction.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/makoto/secret_prediction/issues"
+  },
+  "homepage": "https://github.com/makoto/secret_prediction#readme",
+  "devDependencies": {
+    "@digix/tempo": "0.0.3"
+  }
+}
