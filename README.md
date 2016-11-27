@@ -38,6 +38,7 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 - [x] Only contract owner can `report` the answer
 - [x] Does not accept empty string to `report`
 - [x] Does not accept empty value(0) to `encrypted_choice`
+- [x] Set date limit on `open`, `submit`, and `report` period
 
 ## Open Discussion
 
