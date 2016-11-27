@@ -45,6 +45,16 @@ Cryptocurrency Lab](http://fc16.ifca.ai/bitcoin/papers/DAKMS16.pdf)
 
 ## TODO
 
+- [ ] Add time dependent tests (still finding out best ways to do it)
 - [ ] Submission deadline
 - [ ] Open submission deadline
-- [ ] Add time dependent tests
+
+## Out of scope
+
+The followings are out of scope. Even though they are important, they are less related to the core logic of the application.
+
+- circuit breaker
+- rate limiting
+- maximum usage
+- contract upgrading
+- bug bounty
