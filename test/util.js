@@ -25,31 +25,4 @@ contract('Util', function(accounts) {
       }).then(done);
     });
   });
-
-  describe('getTime', function(){
-    it.only("returns time", function(done) {
-
-      var a_day = 1 * 60 * 60 * 24 // 1 day
-      var beforeJump;
-      var tempo;
-      new Tempo(web3).then(function(_tempo){
-        tempo = _tempo;
-        return Util.new();
-      }).then(function(_util){
-        util = _util;
-        return util.getTime.call();
-      }).then(function(_time){
-        beforeJump = _time;
-        console.log('block', web3.eth.getBlock('latest').number);
-        console.log('time', _time)
-        return tempo.waitForBlocks(1, a_day);
-      }).then(function(){
-        return util.getTime.call();
-      }).then(function(_time){
-        console.log('block', web3.eth.getBlock('latest').number);
-        console.log('time', _time)
-        assert.equal(_time - beforeJump, a_day)
-      }).then(done);
-    })
-  })
 });

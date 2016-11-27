@@ -48,8 +48,4 @@ contract Util{
         else
             return 0;
    }
-
-   function getTime() returns(uint){
-      return now;
-   }
 }
